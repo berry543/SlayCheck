@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlayCheck — Instant Outfit Rating</title>
+    <meta name="description" content="Upload your outfit photo and get AI-powered style scores, vibe analysis, improvement tips, photo poses, pairing advice, and hairstyle & makeup suggestions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated background blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">👗</span>
+            <span class="logo-text">Slay<span class="logo-accent">Check</span></span>
+        </div>
+        <div class="badge">
+            <span>✨ No Sign-up Required</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">
+                Rate Your <span class="gradient-text">Outfit</span> with AI
+            </h1>
+            <p class="hero-subtitle">Upload a photo. Get instant style scores, vibe analysis, improvement suggestions, pose ideas, pairing tips, and hairstyle & makeup recommendations — all powered by AI.</p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div id="dropZone" class="drop-zone glass-card">
+                <div id="dropZoneContent" class="drop-zone-content">
+                    <div class="upload-icon-wrapper">
+                        <svg class="upload-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    </div>
+                    <h3>Drop your outfit photo here</h3>
+                    <p>or click to browse</p>
+                    <span class="file-types">JPG, PNG, WEBP — max 10 MB</span>
+                </div>
+                <div id="previewArea" class="preview-area hidden">
+                    <img id="previewImage" alt="Outfit preview">
+                    <button id="removeImage" class="btn btn-remove" title="Remove image">✕</button>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+            <button id="analyzeBtn" class="btn btn-analyze" disabled>
+                <span class="btn-text">✨ Analyze My Outfit</span>
+                <div class="btn-loader hidden">
+                    <div class="spinner"></div>
+                    <span>Analyzing...</span>
+                </div>
+            </button>
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section hidden">
+            <h2 class="results-title">Your <span class="gradient-text">Analysis</span></h2>
+
+            <!-- Score Cards -->
+            <div class="scores-row">
+                <div class="score-card glass-card" id="styleScoreCard">
+                    <div class="score-ring" id="styleRing">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="ring-fill style-ring-fill" cx="60" cy="60" r="52" id="styleCircle"/>
+                        </svg>
+                        <div class="score-value" id="styleScoreValue">0</div>
+                    </div>
+                    <h3>Style Score</h3>
+                    <p class="score-label" id="styleLabel">—</p>
+                </div>
+                <div class="score-card glass-card" id="vibeScoreCard">
+                    <div class="score-ring" id="vibeRing">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="ring-fill vibe-ring-fill" cx="60" cy="60" r="52" id="vibeCircle"/>
+                        </svg>
+                        <div class="score-value" id="vibeScoreValue">0</div>
+                    </div>
+                    <h3>Vibe Score</h3>
+                    <p class="score-label" id="vibeLabel">—</p>
+                </div>
+            </div>
+
+            <!-- Detail Cards -->
+            <div class="detail-grid">
+                <!-- Improvements -->
+                <div class="detail-card glass-card">
+                    <div class="detail-header">
+                        <span class="detail-icon">💡</span>
+                        <h3>Improvement Suggestions</h3>
+                    </div>
+                    <ul id="improvementsList" class="detail-list"></ul>
+                </div>
+
+                <!-- Photo Poses -->
+                <div class="detail-card glass-card">
+                    <div class="detail-header">
+                        <span class="detail-icon">📸</span>
+                        <h3>Photo Poses</h3>
+                    </div>
+                    <ul id="posesList" class="detail-list"></ul>
+                </div>
+
+                <!-- Pairing -->
+                <div class="detail-card glass-card">
+                    <div class="detail-header">
+                        <span class="detail-icon">👟</span>
+                        <h3>Pairing Recommendations</h3>
+                    </div>
+                    <ul id="pairingList" class="detail-list"></ul>
+                </div>
+
+                <!-- Hairstyle & Makeup -->
+                <div class="detail-card glass-card">
+                    <div class="detail-header">
+                        <span class="detail-icon">💄</span>
+                        <h3>Hairstyle & Makeup</h3>
+                    </div>
+                    <ul id="hairMakeupList" class="detail-list"></ul>
+                </div>
+            </div>
+
+            <button id="tryAgainBtn" class="btn btn-ghost try-again">↺ Try Another Outfit</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Made with ❤️ — SlayCheck | Smart Outfit Analysis</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
